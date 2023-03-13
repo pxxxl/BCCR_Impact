@@ -3,4 +3,4 @@ project(BCCR_Impact C)
 
 set(CMAKE_C_STANDARD 90)
 
-add_executable(BCCR_Impact main.c)
+add_executable(BCCR_Impact main.c unit_holder.h unit.h)
