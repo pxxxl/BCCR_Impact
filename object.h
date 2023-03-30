@@ -6,7 +6,7 @@
 #define BCCR_IMPACT_OBJECT_H
 
 #include "lw_oopc.h"
-#include "layer.h"
+#include "base.h"
 #define obj_type_t int
 
 #define BLUE_SIDE 1
@@ -15,7 +15,7 @@
 #define BLUE_ATTACK 4
 #define RED_ATTACK 5
 
-CLASS(Object)
+ABS_CLASS(Object)
 {
     // Object Position
     int x;
@@ -44,10 +44,5 @@ CLASS(Object)
     void (*attack)(Object *self, Layer *layer);
     void (*affect)(Object *self, Layer *layer);
 };
-
-void object_decision(Object *self, Layer *layer);
-void object_move(Object *self, Layer *layer);
-void object_attack(Object *self, Layer *layer);
-void object_affect(Object *self, Layer *layer);
 
 #endif //BCCR_IMPACT_OBJECT_H
