@@ -29,8 +29,8 @@ struct Layer
     Block* (*move_object)(Layer *self, Block *object, int direction, int step);
     void (*delete_object)(Layer *self, Block *object);
     void (*assign_pointer)(Layer* self, Block *object, void *any);
-    Block* (*find_closest_object_in_direction)(Layer *self, int x, int y, int direction);
-    Block* (*find_closest_object)(Layer *self, int x, int y);
+    Block* (*find_closest_object_in_direction)(Layer *self, Block *object, int direction);
+    Block* (*find_closest_object)(Layer *self, Block *object);
 
 };
 

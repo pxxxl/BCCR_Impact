@@ -13,6 +13,15 @@ Layer* create_layer(){
             self->layer[i][j] = NULL;
         }
     }
+    self->detect_exist_object = detect_exist_object;
+    self->get_object = get_object;
+    self->create_object = create_object;
+    self->teleport_object = teleport_object;
+    self->move_object = move_object;
+    self->delete_object = delete_object;
+    self->assign_pointer = assign_pointer;
+    self->find_closest_object_in_direction = find_closest_object_in_direction;
+    self->find_closest_object = find_closest_object;
     return self;
 }
 

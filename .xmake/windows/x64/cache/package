@@ -1,0 +1,26 @@
+{
+    gtest = {
+        version = "1.12.1",
+        envs = {
+            PATH = {
+                [[C:\Users\LENOVO\AppData\Local\.xmake\packages\g\gtest\1.12.1\25c962627a494e83bc3035ae7a47f9c3\bin]]
+            }
+        },
+        static = true,
+        links = {
+            "gmock",
+            "gtest",
+            "gtest_main"
+        },
+        linkdirs = [[C:\Users\LENOVO\AppData\Local\.xmake\packages\g\gtest\1.12.1\25c962627a494e83bc3035ae7a47f9c3\lib]],
+        libfiles = {
+            [[C:\Users\LENOVO\AppData\Local\.xmake\packages\g\gtest\1.12.1\25c962627a494e83bc3035ae7a47f9c3\lib\gmock.lib]],
+            [[C:\Users\LENOVO\AppData\Local\.xmake\packages\g\gtest\1.12.1\25c962627a494e83bc3035ae7a47f9c3\lib\gtest.lib]],
+            [[C:\Users\LENOVO\AppData\Local\.xmake\packages\g\gtest\1.12.1\25c962627a494e83bc3035ae7a47f9c3\lib\gtest_main.lib]]
+        },
+        __installdir = [[C:\Users\LENOVO\AppData\Local\.xmake\packages\g\gtest\1.12.1\25c962627a494e83bc3035ae7a47f9c3]],
+        __enabled = true,
+        __requirestr = "gtest",
+        sysincludedirs = [[C:\Users\LENOVO\AppData\Local\.xmake\packages\g\gtest\1.12.1\25c962627a494e83bc3035ae7a47f9c3\include]]
+    }
+}
