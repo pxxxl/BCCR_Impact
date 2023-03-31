@@ -289,16 +289,18 @@ Block* find_closest_object_in_direction(Layer *self, Block *object, int directio
     int* touch_position;
     int des_x;
     int des_y;
+    int pos;
+    int expect;
+    int expect_pos;
     switch(direction){
         case UP:
             touch_position = (int*)malloc(sizeof(int)*object->length);
             for(i = object->x; i < object->x + object->length; i++){
-                int pos;
                 pos = path_detect(self, i, object->y + 1, i, -1);
                 touch_position[i] = pos;
             }
-            int expect = -1;
-            int expect_pos = -1;
+            expect = -1;
+            expect_pos = -1;
             for(i = object->x; i < object->x + object->length; i++){
                 if(touch_position[i] != -1 && touch_position[i] > expect){
                     expect = touch_position[i];
@@ -314,7 +316,6 @@ Block* find_closest_object_in_direction(Layer *self, Block *object, int directio
         case DOWN:
             touch_position = (int*)malloc(sizeof(int)*object->length);
             for(i = object->x; i < object->x + object->length; i++){
-                int pos;
                 pos = path_detect(self, i, object->y+object->height, i, BASE_MAX_Y);
                 touch_position[i] = pos;
             }
@@ -335,7 +336,6 @@ Block* find_closest_object_in_direction(Layer *self, Block *object, int directio
         case LEFT:
             touch_position = (int*)malloc(sizeof(int)*object->height);
             for(i = object->y; i < object->y + object->height; i++){
-                int pos;
                 pos = path_detect(self, object->x - 1, i, -1, i);
                 touch_position[i] = pos;
             }

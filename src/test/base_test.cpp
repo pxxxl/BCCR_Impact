@@ -1,7 +1,9 @@
 #include <iostream>
-#include "../base/base.h"
+extern "C"{
+    #include "../base/base.h"
+}
 #include "gtest/gtest.h"
-/*
+
 TEST(BASE_TEST, valid_address){
     Layer* layer = create_layer();
     ASSERT_TRUE(layer != NULL);
@@ -52,9 +54,8 @@ TEST(BASE_TEST, move_object){
     ASSERT_TRUE(block->height == 3);
 
 }
-*/
+
 int main() {
     testing::InitGoogleTest();
-    create_layer();
-    return 0;
+    return RUN_ALL_TESTS();
 }
