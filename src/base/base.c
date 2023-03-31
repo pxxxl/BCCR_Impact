@@ -372,6 +372,16 @@ Block* find_closest_object_in_direction(Layer *self, Block *object, int directio
     return NULL;
 }
 
+// assign the any pointer
+void assign_pointer(Layer* self, Block* object, void* any){
+    if(object == NULL){
+        printf("ERROR: NULL object in assign_pointer");
+        exit(1);
+    }
+    object->any = any;
+}
+
+
 // scan the around of the object
 // if success, return the object, else return NULL
 static Block* find_closest_object_around(Layer *self, Block *object, int radius){

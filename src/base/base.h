@@ -11,6 +11,9 @@ typedef struct Block{
     // height : y
     int length;
     int height;
+
+    // this module did not release the "any" pointer
+    void* any;
 } Block;
 
 struct Layer;
@@ -25,6 +28,7 @@ struct Layer
     Block* (*teleport_object)(Layer *self, int des_x, int des_y, Block *object);
     Block* (*move_object)(Layer *self, Block *object, int direction, int step);
     void (*delete_object)(Layer *self, Block *object);
+    void (*assign_pointer)(Layer* self, Block *object, void *any);
     Block* (*find_closest_object_in_direction)(Layer *self, int x, int y, int direction);
     Block* (*find_closest_object)(Layer *self, int x, int y);
 
@@ -39,7 +43,7 @@ void destroy_layer(Layer *self);
 // NOTICE: varieble range: [x1, x2), [y1, y2)
 
 // verify if the address is valid
-BOOL is_valid_address(Layer *self, int x, int y);
+static BOOL is_valid_address(Layer *self, int x, int y);
 
 // detect if there is an object in the area, return NULL if not, return the first object if there is
 Block* detect_exist_object(Layer *self, int x1, int y1, int x2, int y2);
@@ -63,6 +67,9 @@ Block* move_object(Layer *self, Block *object, int direction, int step);
 // delete the object
 void delete_object(Layer* self, Block* object);
 
+// assign the any pointer
+void assign_pointer(Layer* self, Block* object, void* any);
+
 // find the closest object in the direction
 // if success, return the object, else return NULL
 Block* find_closest_object_in_direction(Layer *self, Block *object, int direction);
@@ -70,21 +77,3 @@ Block* find_closest_object_in_direction(Layer *self, Block *object, int directio
 // find the closest object
 // if success, return the object, else return NULL
 Block* find_closest_object(Layer *self, Block *object);
-
-
-
-
-
-
-/*
-Block* hurt_object(Block *self, int damage);
-Block* heal_object(Block *self, int heal);
-Block* freeze_object(Block *self);
-Block* burn_object(Block *self);
-Block* defend_object(Block *self);
-Block* weaken_object(Block *self);
-Block* de_freeze_object(Block *self);
-Block* de_burn_object(Block *self);
-Block* de_defend_object(Block *self);
-Block* de_weaken_object(Block *self);
-*/

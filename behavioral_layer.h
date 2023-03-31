@@ -1,8 +1,0 @@
-//
-// Created by cozard on 23-3-26.
-//
-
-#ifndef BCCR_IMPACT_BEHAVIORAL_LAYER_H
-#define BCCR_IMPACT_BEHAVIORAL_LAYER_H
-
-#endif //BCCR_IMPACT_BEHAVIORAL_LAYER_H

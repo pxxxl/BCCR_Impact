@@ -3,4 +3,4 @@ project(BCCR_Impact C)
 
 set(CMAKE_C_STANDARD 90)
 
-add_executable(BCCR_Impact main.c unit_holder.h unit.h lw_oopc.h base.h base.c behavioral_layer.c behavioral_layer.h object.h macros.h)
+add_executable(BCCR_Impact src/test/main.c src/base/base.h src/base/base.c src/base/object.h src/base/macros.h src/test/base_test.cpp src/base/layer.c src/base/layer.h)
