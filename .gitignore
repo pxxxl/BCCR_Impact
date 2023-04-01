@@ -1,2 +1,10 @@
-/cmake-build-debug/
-/.idea/
+*
+!Document/
+!Document/**/*
+
+!src/
+!src/**/*
+
+!CMakeLists.txt
+!README.md
+!xmake.lua
