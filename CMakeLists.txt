@@ -8,7 +8,7 @@ cmake_policy(SET CMP0091 NEW)
 project(base_test LANGUAGES CXX C)
 
 # target
-add_executable(base_test "")
+add_executable(base_test "" src/draw/draw.h)
 set_target_properties(base_test PROPERTIES OUTPUT_NAME "base_test")
 set_target_properties(base_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/windows/x86/release")
 target_include_directories(base_test PRIVATE
