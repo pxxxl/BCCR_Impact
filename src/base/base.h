@@ -74,3 +74,6 @@ Block* find_closest_object_in_direction(Layer *self, Block *object, int directio
 // find the closest object
 // if success, return the object, else return NULL
 Block* find_closest_object(Layer *self, Block *object);
+
+
+

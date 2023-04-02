@@ -1,10 +1,7 @@
-*
-!Document/
-!Document/**/*
-
-!src/
-!src/**/*
-
-!CMakeLists.txt
-!README.md
-!xmake.lua
+.idea/**/
+.vscode/**/
+.xmake/**/
+build/**/
+src/test/**/
+.gitignore
+CMakeLists.txt
