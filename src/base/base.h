@@ -25,8 +25,8 @@ struct Layer
     Block* (*detect_exist_object)(Layer *self, int x1, int y1, int x2, int y2);
     Block* (*get_object)(Layer *self, int x, int y);
     Block* (*create_object)(Layer *self, int x, int y, int length, int height);
-    Block* (*teleport_object)(Layer *self, int des_x, int des_y, Block *object);
-    Block* (*move_object)(Layer *self, Block *object, int direction, int step);
+    BOOL (*teleport_object)(Layer *self, int des_x, int des_y, Block *object);
+    BOOL (*move_object)(Layer *self, Block *object, int direction, int step);
     void (*delete_object)(Layer *self, Block *object);
     void (*assign_pointer)(Layer* self, Block *object, void *any);
     Block* (*find_closest_object_in_direction)(Layer *self, Block *object, int direction);
@@ -42,9 +42,6 @@ void destroy_layer(Layer *self);
 
 // NOTICE: varieble range: [x1, x2), [y1, y2)
 
-// verify if the address is valid
-static BOOL is_valid_address(Layer *self, int x, int y);
-
 // detect if there is an object in the area, return NULL if not, return the first object if there is
 Block* detect_exist_object(Layer *self, int x1, int y1, int x2, int y2);
 
@@ -56,13 +53,13 @@ Block* create_object(Layer *self, int x, int y, int length, int height);
 
 // teleport the object, the place is up left corner
 // the path do not need to be empty
-// if success, return the object, else return NULL
-Block* teleport_object(Layer *self, int des_x, int des_y, Block *object);
+// if success, return TRUE
+BOOL teleport_object(Layer *self, int des_x, int des_y, Block *object);
 
 // move the object, the anchor point is up left corner
 // the path need to be empty
 // if success, return the object, else return NULL
-Block* move_object(Layer *self, Block *object, int direction, int step);
+BOOL move_object(Layer *self, Block *object, int direction, int step);
 
 // delete the object
 void delete_object(Layer* self, Block* object);
@@ -77,3 +74,6 @@ Block* find_closest_object_in_direction(Layer *self, Block *object, int directio
 // find the closest object
 // if success, return the object, else return NULL
 Block* find_closest_object(Layer *self, Block *object);
+
+
+

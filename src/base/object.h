@@ -1,5 +1,8 @@
 #pragma once
 
+struct Object;
+typedef struct Object Object;
+
 #include "layer.h"
 #include "macros.h"
 #include "base.h"
@@ -37,21 +40,18 @@ struct Anime{
 };
 
 
-struct Object;
-typedef struct Object Object;
 struct Object{
     Status status;
     Config config;
     Anime anime;
 
     Block* block;
-    Layer* host;
+    Processor* host;
 
     void (*init)(void *self, void *api);
+
     void (*birth)(void *self, void *api);
-    void (*move)(void *self, void *api);
-    void (*attack)(void *self, void *api);
-    void (*affect)(void *self, void *api);
+    void (*action)(void *self, void *api);
     void (*death)(void *self, void *api);
 
     void (*hurt)(void *self, int damage);
