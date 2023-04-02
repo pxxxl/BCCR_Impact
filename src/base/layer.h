@@ -1,15 +1,16 @@
 #pragma once
 
+struct ProcessorApi;
+typedef struct ProcessorApi ProcessorApi;
+
+struct Processor;
+typedef struct Processor Processor;
+
 #include "base.h"
 #include "object.h"
 #include "macros.h"
 
-struct ProcessorApi;
-typedef struct ProcessorApi ProcessorApi;
 
-
-struct Processor;
-typedef struct Processor Processor;
 struct Processor{
     Processor *layer;
     ProcessorApi *api;

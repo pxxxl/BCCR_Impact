@@ -3,6 +3,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// verify if the address is valid
+static BOOL is_valid_address(Layer *self, int x, int y){
+    if(x < 0 || x >= BASE_MAX_X || y < 0 || y >= BASE_MAX_Y){
+        return FALSE;
+    }
+    return TRUE;
+}
+
+static void check_address_bound(char* function_name, Layer *self, int x, int y){
+    if(!is_valid_address(self, x, y)){
+        printf("ERROR: invalid address in %s, x = %d, y = %d", function_name, x, y);
+        exit(1);
+    }
+}
+
+static void check_two_address(char* function_name, Layer *self, int x1, int y1, int x2, int y2){
+    if(!is_valid_address(self, x1, y1)){
+        printf("ERROR: invalid address in %s, x1 = %d, y1 = %d", function_name, x1, y1);
+        exit(1);
+    }
+    if(!is_valid_address(self, x2, y2)){
+        printf("ERROR: invalid address in %s, x2 = %d, y2 = %d", function_name, x2, y2);
+        exit(1);
+    }
+    if(x1 > x2){
+        printf("ERROR: non logical address in %s, x1 = %d, x2 = %d", function_name, x1, x2);
+        exit(1);
+    }
+    if(y1 > y2){
+        printf("ERROR: non logical address in %s, y1 = %d, y2 = %d", function_name, y1, y2);
+        exit(1);
+    }
+}
+
+static void check_null_layer_pointer(char* function_name, Layer *pointer){
+    if(pointer == NULL){
+        printf("ERROR: NULL layer pointer in %s", function_name);
+        exit(1);
+    }
+}
+
+static void check_null_object_pointer(char* function_name, Block *pointer){
+    if(pointer == NULL){
+        printf("ERROR: NULL object pointer in %s", function_name);
+        exit(1);
+    }
+}
+
 
 // create a layer
 Layer* create_layer(){
@@ -27,10 +75,7 @@ Layer* create_layer(){
 
 // delete a layer
 void destroy_layer(Layer *self){
-    if(self == NULL){
-        printf("ERROR: NULL layer in destroy_layer");
-        exit(1);
-    }
+    check_null_layer_pointer("destroy_layer", self);
     int i, j;
     for(i = 0; i < BASE_MAX_Y; i++){
         for(j = 0; j < BASE_MAX_X; j++){
@@ -43,23 +88,12 @@ void destroy_layer(Layer *self){
     free(self);
 }
 
-// verify if the address is valid
-BOOL is_valid_address(Layer *self, int x, int y){
-    if(x < 0 || x >= BASE_MAX_X || y < 0 || y >= BASE_MAX_Y){
-        return FALSE;
-    }
-    return TRUE;
-}
 
 
 // detect if there is an object in the area, return NULL if not, return the first object if there is
 Block* detect_exist_object(Layer *self, int x1, int y1, int x2, int y2){
-    if(is_valid_address(self, x1, y1) &&    // up left corner
-       is_valid_address(self, x2, y2) &&    // down right corner
-       x1 <= x2 && y1 <= y2){               // x1 <= x2 and y1 <= y2
-        printf("ERROR: invalid address in detect_exist_object");
-        exit(1);
-    }
+    check_null_layer_pointer("detect_exist_object", self);
+    check_two_address("detect_exist_object", self, x1, y1, x2, y2);
     int i, j;
     for(i = y1; i <= y2; i++){
         for(j = x1; j <= x2; j++){
@@ -74,20 +108,16 @@ Block* detect_exist_object(Layer *self, int x1, int y1, int x2, int y2){
 
 // get the object at this place
 Block* get_object(Layer *self, int x, int y){
-    if(is_valid_address(self, x, y)){
-        printf("ERROR: invalid address in get_object");
-        exit(1);
-    }
+    check_null_layer_pointer("get_object", self);
+    check_address_bound("get_object", self, x, y);
     return self->layer[y][x];
 }
 
 // create an object at this place, the place is up left corner
 Block* create_object(Layer *self, int x, int y, int length, int height){
-    if(is_valid_address(self, x, y) &&    // up left corner
-       is_valid_address(self, x+length-1, y+height-1)){    // down right corner
-        printf("ERROR: invalid address in create_object");
-        exit(1);
-    }
+    check_null_layer_pointer("create_object", self);
+    check_address_bound("create_object", self, x, y);
+    check_address_bound("create_object", self, x+length-1, y+height-1);
     if(detect_exist_object(self, x, y, x+length-1, y+height-1) != NULL){
         return NULL;
     }
@@ -108,14 +138,13 @@ Block* create_object(Layer *self, int x, int y, int length, int height){
 // teleport the object, the place is up left corner
 // the path do not need to be empty
 // if success, return the object, else return NULL
-Block* teleport_object(Layer *self, int des_x, int des_y, Block *object){
-    if(is_valid_address(self, des_x, des_y) &&    // up left corner
-       is_valid_address(self, des_x+object->length-1, des_y+object->height-1)){    // down right corner
-        printf("ERROR: invalid address in teleport_object");
-        exit(1);
-    }
+BOOL teleport_object(Layer *self, int des_x, int des_y, Block *object){
+    check_null_layer_pointer("teleport_object", self);
+    check_null_object_pointer("teleport_object", object);
+    check_address_bound("teleport_object", self, des_x, des_y);
+    check_address_bound("teleport_object", self, des_x+object->length-1, des_y+object->height-1);
     if(detect_exist_object(self, des_x, des_y, des_x+object->length-1, des_y+object->height-1) != NULL){
-        return NULL;
+        return FALSE;
     }
     if(object == NULL){
         printf("ERROR: NULL object in teleport_object");
@@ -134,24 +163,17 @@ Block* teleport_object(Layer *self, int des_x, int des_y, Block *object){
             self->layer[i][j] = object;
         }
     }
-    return object;
+    return TRUE;
 }
 
 // move the object, the anchor point is up left corner
 // the path need to be empty
 // if success, return the object, else return NULL
-Block* move_object(Layer *self, Block *object, int direction, int step){
-    if(object == NULL){
-        printf("ERROR: NULL object in move_object");
-        exit(1);
-    }
-    if(is_valid_address(self, object->x, object->y) &&
-       is_valid_address(self, object->x+object->length-1, object->y+object->height-1)){
-        printf("ERROR: invalid address in move_object");
-        exit(1);
-    }
+BOOL move_object(Layer *self, Block *object, int direction, int step){
+    check_null_layer_pointer("move_object", self);
+    check_null_object_pointer("move_object", object);
     if(step == 0){
-        return object;
+        return TRUE;
     }
     int des_x = object->x;
     int des_y = object->y;
@@ -190,7 +212,7 @@ Block* move_object(Layer *self, Block *object, int direction, int step){
             exit(1);
     }
     if(detect_exist_object(self, empty_zone_x1, empty_zone_y1, empty_zone_x2, empty_zone_y2) != NULL){
-        return NULL;
+        return FALSE;
     }
     if(is_valid_address(self, des_x, des_y) &&    // up left corner
        is_valid_address(self, des_x+object->length-1, des_y+object->height-1)){    // down right corner
@@ -210,15 +232,14 @@ Block* move_object(Layer *self, Block *object, int direction, int step){
             self->layer[i][j] = object;
         }
     }
-    return object;
+    return TRUE;
 }
+
 
 // delete the object
 void delete_object(Layer* self, Block* object){
-    if(object == NULL){
-        printf("ERROR: NULL object in delete_object");
-        exit(1);
-    }
+    check_null_layer_pointer("delete_object", self);
+    check_null_object_pointer("delete_object", object);
     int i, j;
     for(i = object->y; i < object->y+object->height; i++){
         for(j = object->x; j < object->x+object->length; j++){
@@ -232,8 +253,9 @@ void delete_object(Layer* self, Block* object){
 // assume x1 == x2, then detect from y1 to y2, range [y1, y2)
 // if detected object, return yn, else return -1
 static int path_detect(Layer* self, int x1, int y1, int x2, int y2){
-    if(!is_valid_address(self, x1, y1) || !is_valid_address(self, x2, y2)){
-        printf("ERROR: invalid address in (inline) path_detect");
+    check_null_layer_pointer("path_detect", self);
+    if(x1 == x2 && y1 == y2){
+        printf("ERROR: invalid address in path_detect, x1 = %d, y1 = %d, x2 = %d, y2 = %d", x1, y1, x2, y2);
         exit(1);
     }
     if(x1 == x2 && y1 != y2){
@@ -276,13 +298,10 @@ static int path_detect(Layer* self, int x1, int y1, int x2, int y2){
 // find the closest object in the direction
 // if success, return the object, else return NULL
 Block* find_closest_object_in_direction(Layer *self, Block *object, int direction){
-    if(object == NULL){
-        printf("ERROR: NULL object in find_closest_object_in_direction");
-        exit(1);
-    }
-    if(is_valid_address(self, object->x, object->y) &&
-       is_valid_address(self, object->x+object->length-1, object->y+object->height-1)){
-        printf("ERROR: invalid address in find_closest_object_in_direction");
+    check_null_layer_pointer("find_closest_object_in_direction", self);
+    check_null_object_pointer("find_closest_object_in_direction", object);
+    if(direction != UP && direction != DOWN && direction != LEFT && direction != RIGHT){
+        printf("ERROR: invalid direction in find_closest_object_in_direction");
         exit(1);
     }
     int i, j;
@@ -383,10 +402,7 @@ Block* find_closest_object_in_direction(Layer *self, Block *object, int directio
 
 // assign the any pointer
 void assign_pointer(Layer* self, Block* object, void* any){
-    if(object == NULL){
-        printf("ERROR: NULL object in assign_pointer");
-        exit(1);
-    }
+    check_null_layer_pointer("assign_pointer", self);
     object->any = any;
 }
 
@@ -394,15 +410,8 @@ void assign_pointer(Layer* self, Block* object, void* any){
 // scan the around of the object
 // if success, return the object, else return NULL
 static Block* find_closest_object_around(Layer *self, Block *object, int radius){
-    if(object == NULL){
-        printf("ERROR: NULL object in find_closest_object_around");
-        exit(1);
-    }
-    if(is_valid_address(self, object->x, object->y) &&
-       is_valid_address(self, object->x+object->length-1, object->y+object->height-1)){
-        printf("ERROR: invalid address in find_closest_object_around");
-        exit(1);
-    }
+    check_null_layer_pointer("find_closest_object_around", self);
+    check_null_object_pointer("find_closest_object_around", object);
     int i, j;
     int x1, x2, y1, y2;
     x1 = object->x - radius;
@@ -435,15 +444,8 @@ static Block* find_closest_object_around(Layer *self, Block *object, int radius)
 // find the closest object
 // if success, return the object, else return NULL
 Block* find_closest_object(Layer *self, Block *object){
-    if(object == NULL){
-        printf("ERROR: NULL object in find_closest_object");
-        exit(1);
-    }
-    if(is_valid_address(self, object->x, object->y) &&
-       is_valid_address(self, object->x+object->length-1, object->y+object->height-1)){
-        printf("ERROR: invalid address in find_closest_object");
-        exit(1);
-    }
+    check_null_layer_pointer("find_closest_object", self);
+    check_null_object_pointer("find_closest_object", object);
     int i;
     for(i = 1; i < LOOKUP_MAX_RADIUS; i++){
         Block *result = find_closest_object_around(self, object, i);
