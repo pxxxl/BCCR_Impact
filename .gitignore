@@ -1,7 +1,5 @@
-.idea/**/
-.vscode/**/
-.xmake/**/
-build/**/
-src/test/**/
-.gitignore
 CMakeLists.txt
+.gitignore
+.idea
+.xmake
+build
