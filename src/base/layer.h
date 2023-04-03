@@ -6,18 +6,22 @@ typedef struct ProcessorApi ProcessorApi;
 struct Processor;
 typedef struct Processor Processor;
 
+struct ProcessorAnimeData;
+typedef struct ProcessorAnimeData ProcessorAnimeData;
+
 #include "base.h"
 #include "object.h"
 #include "macros.h"
+#include "../draw/draw.h"
 
 
 struct Processor{
     Processor *layer;
     ProcessorApi *api;
 
-    Object* (*create_object_processor)(Processor *self, int x, int y);
+    Object* (*place_object)(Processor *self, Object* object, int x, int y);
     void (*step)(Processor *self);
-    void (*export_anime_data)(Processor *self);
+    ProcessorAnimeData (*export_anime_data)(Processor *self);
 };
 
 
@@ -34,6 +38,15 @@ struct ProcessorApi{
     Object* (*get_object)(Processor *host, int x, int y);
     Object* (*find_closest_object_in_direction)(Processor *host, int x, int y, int direction);
     Object* (*find_closest_object)(Processor *host, int x, int y);
+};
+
+struct ProcessorAnimeData{
+    Player player1;
+    Player player2;
+    Info_Move* info_move;
+    int info_move_length;
+    Info_Effect* info_effect;
+    int info_effect_length;
 };
 
 Processor* init_processor();
