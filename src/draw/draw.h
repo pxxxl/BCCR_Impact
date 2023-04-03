@@ -13,24 +13,24 @@ typedef struct Player{
     int* skills;
 } Player;
 
-typedef struct Info_Move{
+typedef struct InfoMove{
     int name;
 
     // provide the start and destination information
     int x_start, y_start;
     int x_dest, y_dest;
-}Info_Move;
+}InfoMove;
 
-typedef struct Info_Effect{
+typedef struct InfoEffect{
     int name;
 
     //the effect area
     int x, y;
-}Info_Effect;
+}InfoEffect;
 
 
 void renew_backgrounds(int **arr, int length);
 void renew_status(Player players[2]);
 
-void import_info(Info_Move *info_move, int *size_move, Info_Effect *info_effect, int *size_effect);
+void import_info(InfoMove *info_move, int *size_move, InfoEffect *info_effect, int *size_effect);
 void refresh();
