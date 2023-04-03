@@ -16,64 +16,66 @@ typedef struct Block{
     void* any;
 } Block;
 
-struct Layer;
-typedef struct Layer Layer;
-struct Layer
+struct Base;
+typedef struct Base Base;
+struct Base
 {
-    Block *layer[BASE_MAX_Y][BASE_MAX_X];
+    Block ***base;
+    int length;
+    int height;
 
-    Block* (*detect_exist_object)(Layer *self, int x1, int y1, int x2, int y2);
-    Block* (*get_object)(Layer *self, int x, int y);
-    Block* (*create_object)(Layer *self, int x, int y, int length, int height);
-    BOOL (*teleport_object)(Layer *self, int des_x, int des_y, Block *object);
-    BOOL (*move_object)(Layer *self, Block *object, int direction, int step);
-    void (*delete_object)(Layer *self, Block *object);
-    void (*assign_pointer)(Layer* self, Block *object, void *any);
-    Block* (*find_closest_object_in_direction)(Layer *self, Block *object, int direction);
-    Block* (*find_closest_object)(Layer *self, Block *object);
+    Block* (*detect_exist_block)(Base *self, int x1, int y1, int x2, int y2);
+    Block* (*get_block)(Base *self, int x, int y);
+    Block* (*create_block)(Base *self, int x, int y, int length, int height);
+    BOOL (*teleport_block)(Base *self, int des_x, int des_y, Block *block);
+    BOOL (*move_block)(Base *self, Block *block, int direction, int step);
+    void (*delete_block)(Base *self, Block *block);
+    void (*assign_pointer)(Base* self, Block *block, void *any);
+    Block* (*find_closest_block_in_direction)(Base *self, Block *block, int direction);
+    Block* (*find_closest_block)(Base *self, Block *block);
 
 };
 
-// create a layer
-Layer* create_layer();
+// create a base
+Base* create_base(int length, int height);
 
-// delete a layer
-void destroy_layer(Layer *self);
+// delete a base
+void destroy_base(Base *self);
 
 // NOTICE: varieble range: [x1, x2), [y1, y2)
 
-// detect if there is an object in the area, return NULL if not, return the first object if there is
-Block* detect_exist_object(Layer *self, int x1, int y1, int x2, int y2);
+// detect if there is an block in the area, return NULL if not, return the first block if there is
+Block* detect_exist_block(Base *self, int x1, int y1, int x2, int y2);
 
-// get the object at this place
-Block* get_object(Layer *self, int x, int y);
+// get the block at this place
+Block* get_block(Base *self, int x, int y);
 
-// create an object at this place, the place is up left corner
-Block* create_object(Layer *self, int x, int y, int length, int height);
+// create an block at this place, the place is up left corner
+Block* create_block(Base *self, int x, int y, int length, int height);
 
-// teleport the object, the place is up left corner
+// teleport the block, the place is up left corner
 // the path do not need to be empty
 // if success, return TRUE
-BOOL teleport_object(Layer *self, int des_x, int des_y, Block *object);
+BOOL teleport_block(Base *self, int des_x, int des_y, Block *block);
 
-// move the object, the anchor point is up left corner
+// move the block, the anchor point is up left corner
 // the path need to be empty
-// if success, return the object, else return NULL
-BOOL move_object(Layer *self, Block *object, int direction, int step);
+// if success, return the block, else return NULL
+BOOL move_block(Base *self, Block *block, int direction, int step);
 
-// delete the object
-void delete_object(Layer* self, Block* object);
+// delete the block
+void delete_block(Base* self, Block* block);
 
 // assign the any pointer
-void assign_pointer(Layer* self, Block* object, void* any);
+void assign_pointer(Base* self, Block* block, void* any);
 
-// find the closest object in the direction
-// if success, return the object, else return NULL
-Block* find_closest_object_in_direction(Layer *self, Block *object, int direction);
+// find the closest block in the direction
+// if success, return the block, else return NULL
+Block* find_closest_block_in_direction(Base *self, Block *block, int direction);
 
-// find the closest object
-// if success, return the object, else return NULL
-Block* find_closest_object(Layer *self, Block *object);
+// find the closest block
+// if success, return the block, else return NULL
+Block* find_closest_block(Base *self, Block *block);
 
 
 
