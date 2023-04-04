@@ -76,7 +76,7 @@ Base* create_base(int length, int height){
     self->teleport_block = teleport_block;
     self->move_block = move_block;
     self->delete_block = delete_block;
-    self->assign_pointer = assign_pointer;
+    self->assign_data = assign_data;
     self->find_closest_block_in_direction = find_closest_block_in_direction;
     self->find_closest_block = find_closest_block;
     return self;
@@ -414,9 +414,10 @@ Block* find_closest_block_in_direction(Base *self, Block *block, int direction){
 }
 
 // assign the any pointer
-void assign_pointer(Base* self, Block* block, void* any){
-    check_null_base_pointer("assign_pointer", self);
+void assign_data(Base* self, Block* block, void* any, int any_type){
+    check_null_base_pointer("assign_data", self);
     block->any = any;
+    block->any_type = any_type;
 }
 
 
