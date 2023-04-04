@@ -1,36 +1,47 @@
 #pragma once
-
 typedef struct Player{
     // only 1 & 2
-    int player_name;
+    int playerName;
 
     // 0~100 convert to percentage
     int hp;
 
-    // skills[n][0]: the serial number of skill
-    // skills[n][1]: the number of skill the player owns
-    int skill_num;
+    // the tag of skill
     int* skills;
+    // the num of skill player has
+    int skillNum;
+
 } Player;
 
-typedef struct Info_Move{
-    int name;
+typedef struct InfoMove{
+    int tag;
 
     // provide the start and destination information
     int x_start, y_start;
     int x_dest, y_dest;
-}Info_Move;
+}InfoMove;
 
-typedef struct Info_Effect{
-    int name;
+typedef struct InfoEffect{
+    int tag;
 
     //the effect area
     int x, y;
-}Info_Effect;
+}InfoEffect;
 
+typedef struct Info{
+    InfoMove *infomove;
+    int lengthMove;
+    
+    InfoEffect *infoeffect;
+    int lengthEffect;
+} Info;
 
-void renew_backgrounds(int **arr, int length);
+    // obstacles[n][0] the tag of obstacle
+    // obstacles[n][1] the x of obstacle
+    // obstacles[n][2] the y of obstacle
+void renew_backgrounds(int **obstacles, int length);
+
 void renew_status(Player players[2]);
 
-void import_info(Info_Move *info_move, int *size_move, Info_Effect *info_effect, int *size_effect);
-void refresh();
+void import_info(Info *info,InfoMove *infomove, int lengthMove, InfoEffect *infoeffect, int lengthEffect);
+void refresh(Info Info);

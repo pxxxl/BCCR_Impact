@@ -18,3 +18,6 @@
 #define RED_BULLET 3
 #define BLUE_BULLET 4
 #define NEUTRAL 5
+
+#define SCREEN_MAX_X = 640
+#define SCREEN_MAX_y = 480
