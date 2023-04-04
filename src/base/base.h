@@ -14,6 +14,7 @@ typedef struct Block{
 
     // this module did not release the "any" pointer
     void* any;
+    int any_type;
 } Block;
 
 struct Base;
@@ -30,7 +31,7 @@ struct Base
     BOOL (*teleport_block)(Base *self, int des_x, int des_y, Block *block);
     BOOL (*move_block)(Base *self, Block *block, int direction, int step);
     void (*delete_block)(Base *self, Block *block);
-    void (*assign_pointer)(Base* self, Block *block, void *any);
+    void (*assign_data)(Base* self, Block *block, void *any, int any_type);
     Block* (*find_closest_block_in_direction)(Base *self, Block *block, int direction);
     Block* (*find_closest_block)(Base *self, Block *block);
 
@@ -67,7 +68,7 @@ BOOL move_block(Base *self, Block *block, int direction, int step);
 void delete_block(Base* self, Block* block);
 
 // assign the any pointer
-void assign_pointer(Base* self, Block* block, void* any);
+void assign_data(Base* self, Block* block, void* any, int any_type);
 
 // find the closest block in the direction
 // if success, return the block, else return NULL

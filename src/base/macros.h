@@ -21,3 +21,11 @@
 
 #define SCREEN_MAX_X = 640
 #define SCREEN_MAX_y = 480
+
+#define ANIME_INFO_MOVE_MAX_LENGTH 1000
+#define ANIME_INFO_EFFECT_MAX_LENGTH 1000
+
+// Data
+#define PLAYER_HP 100
+#define PLAYER_SKILL_NUM 6
+
