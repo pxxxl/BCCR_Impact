@@ -36,12 +36,13 @@ typedef struct Info{
     int lengthEffect;
 } Info;
 
-    // obstacles[n][0] the tag of obstacle
-    // obstacles[n][1] the x of obstacle
-    // obstacles[n][2] the y of obstacle
-void renew_backgrounds(int **obstacles, int length);
+Info* init_draw();
 
+void renew_backgrounds(int **obstacles, int length);
 void renew_status(Player players[2]);
 
 void import_info(Info *info,InfoMove *infomove, int lengthMove, InfoEffect *infoeffect, int lengthEffect);
-void refresh(Info Info);
+void refresh(Info info, int cnt);
+
+void draw_move(InfoMove infoMove);
+void draw_effect(InfoEffect infoEffect);
