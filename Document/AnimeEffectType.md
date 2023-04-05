@@ -23,7 +23,7 @@
 
 **接口：**`void renew_backgrounds(int **obstacles, int length);`
 
-**绘制：**绘制出游戏的背景板
+**绘制：** 绘制出游戏的背景板
 
 处理器提供的信息：
 
@@ -43,7 +43,7 @@
 
 **接口：**`void renew_status(Player players[2]);`
 
-**绘制：**绘制出玩家状态栏
+**绘制：** 绘制出玩家状态栏
 
 处理器提供信息：
 
@@ -82,7 +82,7 @@ typedef struct Player{
 
 **接口：**`void refresh(Info info, int cnt);`
 
-**绘制：**绘制游戏过程动画
+**绘制：** 绘制游戏过程动画
 
 处理器提供的信息：
 
@@ -97,7 +97,7 @@ typedef struct Player{
 
 **接口：**`void draw_effect(InfoEffect infoEffect);（private）`
 
-**绘制：**在显示时间内保持在某个坐标不动的物体
+**绘制：** 在显示时间内保持在某个坐标不动的物体
 处理器提供的信息：
 
 1. x坐标
@@ -116,7 +116,7 @@ typedef struct InfoEffect{
 }InfoEffect;
 ```
 
-**特别说明：**出生效果请使用该接口传入信息
+**特别说明：** 出生效果请使用该接口传入信息
 
 [传入数据]:传入数据永远使用`import_info`方法
 
